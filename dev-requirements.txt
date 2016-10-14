@@ -1,0 +1,4 @@
+# This file lists the requirements needed to develop on ga4gh/ga4gh-common.
+
+# Include the requirements.txt file
+-r requirements.txt
