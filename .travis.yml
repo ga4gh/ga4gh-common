@@ -1,0 +1,27 @@
+language: python
+python:
+  - "2.7"
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.cache/pip
+
+install:
+  - pip install pip --upgrade
+  - pip install setuptools
+  - python setup.py sdist
+  - pip install dist/ga4gh_common*.tar.gz
+# every installable in setup.py's entry_points should be tested here
+
+before_script:
+  - pip install -r dev-requirements.txt
+
+
+# run_tests.py runs everything under the script: tag so only put commands
+# under it that we want to run (and want to be able to run) as local tests
+script: 
+  - flake8 common tests
+  - nosetests --with-coverage --cover-package common
+              --cover-inclusive --cover-min-percentage=70
+              --cover-branches --cover-erase
