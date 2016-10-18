@@ -14,3 +14,5 @@ ga4gh_client
 ga4gh_server
     tests/utils.py
     scripts/utils.py
+
+common cli methods

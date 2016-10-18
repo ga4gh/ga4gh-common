@@ -1,10 +1,6 @@
 *~
 *.swp
 *.swo
-ga4gh-example-data*
-ga4gh-downloaded-data*
-ga4gh-compliance-data*
-scripts/auth.yml
 *.fa
 *.pid
 *.fai
@@ -12,8 +8,7 @@ scripts/auth.yml
 *.bak
 *.db-shm
 *.db-wal
-ga4gh_client/_version.py
-tests/data/registry.db
+_version.py
 
 # Below based off of https://gist.github.com/octocat/9257657
 # and https://github.com/github/gitignore/blob/master/Python.gitignore
