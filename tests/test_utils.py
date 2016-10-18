@@ -10,7 +10,7 @@ import tempfile
 import subprocess
 import unittest
 
-import common.utils as utils
+import ga4gh_common.utils as utils
 
 
 class AbstractTestUtils(unittest.TestCase):
