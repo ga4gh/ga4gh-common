@@ -3,3 +3,6 @@
 #
 # These requirements are read directly into setup.py, so specify them
 # in the order that they should be in in setup.py
+
+humanize
+PyYAML

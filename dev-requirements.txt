@@ -8,6 +8,4 @@ nose
 pep8
 flake8
 coverage
-humanize
-PyYAML
 sphinx-argparse
