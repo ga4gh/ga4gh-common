@@ -5,6 +5,9 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
+import sys
+
+import ga4gh_common
 import ga4gh_common.utils as utils
 
 
@@ -29,5 +32,9 @@ class TravisSimulator(object):
 
 
 def run_tests_main():
+    if len(sys.argv) >= 2 and sys.argv[1] == '--version':
+        utils.log("GA4GH run_tests version {}".format(
+            ga4gh_common.__version__))
+        return
     travisSimulator = TravisSimulator()
     travisSimulator.runTests()
