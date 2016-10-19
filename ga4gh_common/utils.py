@@ -71,24 +71,25 @@ def ga4ghImportGlue():
     sys.path.append(path)
 
 
-def runCommand(command, silent=False):
+def runCommand(command, silent=False, shell=False):
     """
     Run a shell command
     """
     splits = shlex.split(command)
-    runCommandSplits(splits, silent=silent)
+    runCommandSplits(splits, silent=silent, shell=shell)
 
 
-def runCommandSplits(splits, silent=False):
+def runCommandSplits(splits, silent=False, shell=False):
     """
     Run a shell command given the command's parsed command line
     """
     try:
         if silent:
             with open(os.devnull, 'w') as devnull:
-                subprocess.check_call(splits, stdout=devnull, stderr=devnull)
+                subprocess.check_call(
+                    splits, stdout=devnull, stderr=devnull, shell=shell)
         else:
-            subprocess.check_call(splits)
+            subprocess.check_call(splits, shell=shell)
     except OSError, e:
         if e.errno == 2:  # cmd not found
             raise Exception(
