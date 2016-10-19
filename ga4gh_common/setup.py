@@ -1,9 +1,7 @@
 """
 Assists with packages' setup.py
 """
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
+# Don't import __future__ packages here; they make setup fail
 
 
 readmeFilename = "README.pypi.rst"
@@ -23,7 +21,7 @@ defaultDict = {
         'Programming Language :: Python :: 2.7',
         'Topic :: Scientific/Engineering :: Bio-Informatics',
     ],
-    "keywords": 'genomics reference',
+    "keywords": ['genomics', 'reference'],
     # Use setuptools_scm to set the version number automatically from Git
     "setup_requires": ['setuptools_scm'],
 }
@@ -58,6 +56,7 @@ def _getInstallRequires():
                 continue
             pinnedVersion = line.split()[0]
             install_requires.append(pinnedVersion)
+    return install_requires
 
 
 def _getSetupDict(packageDict):

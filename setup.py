@@ -1,6 +1,4 @@
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
+# Don't import __future__ packages here; they make setup fail
 
 import ga4gh_common.setup as setup
 
