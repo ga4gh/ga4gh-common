@@ -1,2 +1,0 @@
-[flake8]
-exclude = *_pb2.py

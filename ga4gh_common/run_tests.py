@@ -24,7 +24,7 @@ class TravisSimulator(object):
         testCommands = self.parseTestCommands()
         for command in testCommands:
             self.log('Running: "{}"'.format(command))
-            utils.runCommand(command, shell=True)
+            utils.runCommand(command)
         self.log('SUCCESS')
 
     def log(self, logStr):
