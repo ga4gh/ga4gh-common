@@ -19,9 +19,6 @@ import time
 import yaml
 
 
-packageName = 'ga4gh'
-
-
 def log(message):
     """
     Log a message
@@ -58,17 +55,6 @@ def requireExecutables(executables):
         for missingExecutable in missingExecutables:
             log(missingExecutable)
         exit(1)
-
-
-def ga4ghImportGlue():
-    """
-    Call this method before importing a ga4gh module in the scripts dir.
-    Otherwise, you will be using the installed package instead of
-    the development package.
-    Assumes a certain directory structure.
-    """
-    path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    sys.path.append(path)
 
 
 def runCommand(command, silent=False, shell=False):
@@ -154,15 +140,6 @@ def getLinesFromLogFile(stream):
     stream.seek(0)
     lines = stream.readlines()
     return lines
-
-
-def getProjectRootFilePath():
-    # assumes we're in a directory one level below the project root
-    return os.path.dirname(os.path.dirname(__file__))
-
-
-def getGa4ghFilePath():
-    return os.path.join(getProjectRootFilePath(), packageName)
 
 
 def powerset(iterable, maxSets=None):
