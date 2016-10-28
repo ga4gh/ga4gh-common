@@ -4,15 +4,3 @@ global
     LICENSE
     MANIFEST.in
     STYLE.md
-    setup.py
-    ga4gh_run_tests (from scripts/run_tests.py)
-
-ga4gh_client
-    tests/utils.py
-    scripts/utils.py
-
-ga4gh_server
-    tests/utils.py
-    scripts/utils.py
-
-common cli methods

@@ -9,6 +9,7 @@ import mock
 import tempfile
 import subprocess
 import unittest
+import sys
 
 import ga4gh_common.utils as utils
 
@@ -30,11 +31,6 @@ class TestUtils(AbstractTestUtils):
         self.assertIsNotNone(path)
         notFoundPath = utils.getPathOfExecutable(self.nonexistentExecutable)
         self.assertIsNone(notFoundPath)
-
-    def testGa4ghImportGlue(self):
-        # not invoking ga4ghImportGlue since we don't want to alter
-        # the path here
-        self.assertIsNotNone(utils.ga4ghImportGlue)
 
     def testRunCommand(self):
         utils.runCommand(self.validCommand)
@@ -61,11 +57,6 @@ provider:
         doc = utils.getYamlDocument(path)
         self.assertEqual(doc, {'provider': {'key': 'aKey'}})
 
-    def testCaptureOutput(self):
-        # captureOutput doesn't work here since the stdout and stderr
-        # streams are already reassigned
-        self.assertIsNotNone(utils.captureOutput)
-
     def testZipLists(self):
         a = [1, 2]
         b = [3, 4]
@@ -87,12 +78,6 @@ provider:
         with open(path) as readFile:
             result = utils.getLinesFromLogFile(readFile)
         self.assertEqual(result, [message])
-
-    def testGetProjectRootFilePath(self):
-        self.assertIsNotNone(utils.getProjectRootFilePath())
-
-    def testGetGa4ghFilePath(self):
-        self.assertIsNotNone(utils.getGa4ghFilePath())
 
     def testPowerset(self):
         s = [1, 2, 3]
@@ -157,3 +142,43 @@ class TestUtilsPrintMocked(AbstractTestUtils):
         with self.assertRaises(SystemExit):
             utils.requireExecutables([self.nonexistentExecutable])
         self.assertEquals(self.printMock.call_count, 2)
+
+
+class TestCaptureOutput(unittest.TestCase):
+    """
+    Test that the captureOutput correctly returns the value of stdout
+    and stderr for a function.
+    """
+
+    def testCapture(self):
+        stdoutValue = "stdout"
+        stderrValue = "stderr"
+
+        def func():
+            print(stdoutValue, file=sys.stdout, end="")
+            print(stderrValue, file=sys.stderr, end="")
+        stdout, stderr = utils.captureOutput(func)
+        self.assertEqual(stdout, stdoutValue)
+        self.assertEqual(stderr, stderrValue)
+
+        # Empty stdout
+        def func():
+            print(stderrValue, file=sys.stderr, end="")
+        stdout, stderr = utils.captureOutput(func)
+        self.assertEqual(stdout, "")
+        self.assertEqual(stderr, stderrValue)
+
+        # Empty stderr
+        def func():
+            print(stdoutValue, file=sys.stdout, end="")
+        stdout, stderr = utils.captureOutput(func)
+        self.assertEqual(stdout, stdoutValue)
+        self.assertEqual(stderr, "")
+
+    def testArgs(self):
+        def func(one, two, three, keywordOne=None, keywordTwo=None):
+            print(one, two, three, keywordOne, keywordTwo, file=sys.stdout)
+        stdout, stderr = utils.captureOutput(
+            func, "1", "2", "3", keywordTwo="5", keywordOne="4")
+        self.assertEqual(stdout, "1 2 3 4 5\n")
+        self.assertEqual(stderr, "")
