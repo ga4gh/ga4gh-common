@@ -1,6 +1,0 @@
-global
-    .gitignore
-    CONTRIBUTING.md
-    LICENSE
-    MANIFEST.in
-    STYLE.md
