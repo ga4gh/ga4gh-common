@@ -10,6 +10,7 @@ import tempfile
 import subprocess
 import unittest
 import sys
+import os
 
 import ga4gh_common.utils as utils
 
@@ -38,6 +39,14 @@ class TestUtils(AbstractTestUtils):
             utils.runCommand(self.invalidCommand, silent=True)
         with self.assertRaises(Exception):
             utils.runCommand(self.nonexistentExecutable, silent=True)
+
+    def testRunCommandReturnOutput(self):
+        output = utils.runCommandReturnOutput(self.validCommand)
+        self.assertIsNotNone(output)
+        with self.assertRaises(subprocess.CalledProcessError):
+            utils.runCommandReturnOutput(self.invalidCommand)
+        with self.assertRaises(Exception):
+            utils.runCommandReturnOutput(self.nonexistentExecutable)
 
     def testRunCommandSplits(self):
         utils.runCommandSplits(self.validCommand.split())
@@ -109,6 +118,20 @@ provider:
         # not really sure how to test this
         with utils.suppressOutput():
             pass
+
+    def testPerformInDirectory(self):
+        originalDirPath = os.getcwd()
+        with utils.performInDirectory('..'):
+            newDirPath = os.getcwd()
+        self.assertEqual(os.getcwd(), originalDirPath)
+        self.assertNotEqual(originalDirPath, newDirPath)
+
+    def testChomp(self):
+        line = 'line\n'
+        chomped = utils.chomp(line)
+        self.assertEqual(chomped, 'line')
+        with self.assertRaises(AssertionError):
+            utils.chomp(chomped)
 
 
 class TestUtilsPrintMocked(AbstractTestUtils):

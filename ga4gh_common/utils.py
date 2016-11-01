@@ -65,6 +65,19 @@ def runCommand(command, silent=False, shell=False):
     runCommandSplits(splits, silent=silent, shell=shell)
 
 
+def runCommandReturnOutput(cmd):
+    """
+    Runs a shell command and return the stdout and stderr
+    """
+    splits = shlex.split(cmd)
+    proc = subprocess.Popen(
+        splits, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = proc.communicate()
+    if proc.returncode != 0:
+        raise subprocess.CalledProcessError(stdout, stderr)
+    return stdout, stderr
+
+
 def runCommandSplits(splits, silent=False, shell=False):
     """
     Run a shell command given the command's parsed command line
@@ -152,6 +165,14 @@ def powerset(iterable, maxSets=None):
     return itertools.islice(itertools.chain.from_iterable(
         itertools.combinations(s, r) for r in range(len(s) + 1)),
         0, maxSets)
+
+
+def chomp(line):
+    """
+    Returns a string stripped of its trailing newline character
+    """
+    assert line[-1] == '\n'
+    return line[:-1]
 
 
 # ---------------- Decorators ----------------
@@ -264,3 +285,17 @@ def suppressOutput():
         os.close(origStdout)
         os.close(origStderr)
         devnull.close()
+
+
+@contextlib.contextmanager
+def performInDirectory(dirPath):
+    """
+    Change the current working directory to dirPath before performing
+    an operation, then restore the original working directory after
+    """
+    originalDirectoryPath = os.getcwd()
+    try:
+        os.chdir(dirPath)
+        yield
+    finally:
+        os.chdir(originalDirectoryPath)
