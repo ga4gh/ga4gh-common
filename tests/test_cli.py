@@ -7,7 +7,7 @@ from __future__ import unicode_literals
 
 import unittest
 
-import ga4gh_common.cli as cli
+import ga4gh.common.cli as cli
 
 
 class TestCli(unittest.TestCase):
