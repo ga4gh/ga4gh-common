@@ -12,7 +12,7 @@ import unittest
 import sys
 import os
 
-import ga4gh_common.utils as utils
+import ga4gh.common.utils as utils
 
 
 class AbstractTestUtils(unittest.TestCase):
