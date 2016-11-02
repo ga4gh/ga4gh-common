@@ -1,9 +1,8 @@
 """
 Common utilities for GA4GH software
 """
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
+# Don't include future imports here; we don't want to export them as
+# part of the package
 
 __version__ = "undefined"
 try:
