@@ -133,6 +133,48 @@ provider:
         with self.assertRaises(AssertionError):
             utils.chomp(chomped)
 
+    def testGetFilePathsWithExtensionsInDirectory(self):
+        def createTempTree():
+            tree = tempfile.mkdtemp('getFilePathsWithExtensionsInDirectory')
+            utils.touch(os.path.join(tree, 'a.foo'))
+            utils.touch(os.path.join(tree, 'b.bar'))
+            utils.touch(os.path.join(tree, 'c.baz'))
+            utils.touch(os.path.join(tree, 'd.foo'))
+            treeDirPath = os.path.join(tree, 'treeDir')
+            os.mkdir(treeDirPath)
+            utils.touch(os.path.join(treeDirPath, 'e.foo'))
+            utils.touch(os.path.join(treeDirPath, 'f.bar'))
+            utils.touch(os.path.join(treeDirPath, 'g.baz'))
+            utils.touch(os.path.join(treeDirPath, 'h.foo'))
+            return tree
+
+        tree = createTempTree()
+        patterns = ['*.foo', '*.bar', '*.fo*']
+        filePaths = utils.getFilePathsWithExtensionsInDirectory(
+            tree, patterns, sort=False)
+        self.assertEqual(len(filePaths), 6)
+        basenames = [os.path.basename(filePath) for filePath in filePaths]
+        self.assertIn('a.foo', basenames)
+        self.assertIn('b.bar', basenames)
+        self.assertIn('d.foo', basenames)
+        self.assertIn('e.foo', basenames)
+        self.assertIn('f.bar', basenames)
+        self.assertIn('h.foo', basenames)
+
+        filePaths.sort()
+        sortedFilePaths = utils.getFilePathsWithExtensionsInDirectory(
+            tree, patterns)
+        self.assertEqual(filePaths, sortedFilePaths)
+
+    def testTouch(self):
+        tree = tempfile.mkdtemp('testTouch')
+        filePath = os.path.join(tree, 'touch.txt')
+        self.assertFalse(os.path.exists(filePath))
+        utils.touch(filePath)
+        self.assertTrue(os.path.exists(filePath))
+        utils.touch(filePath)
+        self.assertTrue(os.path.exists(filePath))
+
 
 class TestUtilsPrintMocked(AbstractTestUtils):
     """
