@@ -7,6 +7,7 @@ from __future__ import unicode_literals
 
 import StringIO
 import contextlib
+import fnmatch
 import functools
 import humanize
 import itertools
@@ -149,6 +150,9 @@ def zipLists(*lists):
 
 
 def getLinesFromLogFile(stream):
+    """
+    Returns all lines written to the passed in stream
+    """
     stream.flush()
     stream.seek(0)
     lines = stream.readlines()
@@ -173,6 +177,32 @@ def chomp(line):
     """
     assert line[-1] == '\n'
     return line[:-1]
+
+
+def getFilePathsWithExtensionsInDirectory(dirTree, patterns, sort=True):
+    """
+    Returns all file paths that match any one of patterns in a
+    file tree with its root at dirTree.  Sorts the paths by default.
+    """
+    filePaths = []
+    for root, dirs, files in os.walk(dirTree):
+        for filePath in files:
+            for pattern in patterns:
+                if fnmatch.fnmatch(filePath, pattern):
+                    fullPath = os.path.join(root, filePath)
+                    filePaths.append(fullPath)
+                    break
+    if sort:
+        filePaths.sort()
+    return filePaths
+
+
+def touch(filepath):
+    """
+    Creates an empty file at filepath, if it does not already exist
+    """
+    with open(filepath, 'a'):
+        pass
 
 
 # ---------------- Decorators ----------------
