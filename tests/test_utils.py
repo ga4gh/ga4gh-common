@@ -175,6 +175,31 @@ provider:
         utils.touch(filePath)
         self.assertTrue(os.path.exists(filePath))
 
+    def testAssertFileContentsIdentical(self):
+        _, pathOne = tempfile.mkstemp()
+        with open(pathOne, 'w') as fileOne:
+            fileOne.write('a')
+        _, pathTwo = tempfile.mkstemp()
+        with open(pathTwo, 'w') as fileTwo:
+            fileTwo.write('a')
+        _, pathThree = tempfile.mkstemp()
+        with open(pathThree, 'w') as fileThree:
+            fileThree.write('b')
+        _, pathFour = tempfile.mkstemp()
+        with open(pathFour, 'w') as fileFour:
+            fileFour.write('a\nb')
+        # contents identical
+        utils.assertFileContentsIdentical(pathOne, pathTwo)
+        # contents not identical (line diff)
+        with self.assertRaises(AssertionError):
+            utils.assertFileContentsIdentical(pathOne, pathThree)
+        # contents not identical (one file larger)
+        with self.assertRaises(AssertionError):
+            utils.assertFileContentsIdentical(pathOne, pathFour)
+        # contents not identical (one file larger, args reversed)
+        with self.assertRaises(AssertionError):
+            utils.assertFileContentsIdentical(pathFour, pathOne)
+
 
 class TestUtilsPrintMocked(AbstractTestUtils):
     """
