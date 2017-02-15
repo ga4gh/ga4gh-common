@@ -205,6 +205,24 @@ def touch(filepath):
         pass
 
 
+def assertFileContentsIdentical(pathOne, pathTwo):
+    with open(pathOne) as fileOne, open(pathTwo) as fileTwo:
+        for i, (lineOne, lineTwo) in enumerate(zip(fileOne, fileTwo)):
+            if lineOne != lineTwo:
+                msg = "Mismatch on line {}: '{}' != '{}'".format(
+                    i + 1, lineOne, lineTwo)
+                raise AssertionError(msg)
+        # one file could have more lines than the other file
+        extraLine = fileOne.readline()
+        if extraLine:
+            msg = "File one has extra line: '{}'".format(extraLine)
+            raise AssertionError(msg)
+        extraLine = fileTwo.readline()
+        if extraLine:
+            msg = "File two has extra line: '{}'".format(extraLine)
+            raise AssertionError(msg)
+
+
 # ---------------- Decorators ----------------
 
 
