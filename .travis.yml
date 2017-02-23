@@ -33,5 +33,7 @@ deploy:
     user: dannycolligan
     password:
         secure: mJ3CWlOsHAQeEv2VmlTnFavM8JWGSQ9eF2MhlT9JP6ud8zyXMMXmeDQSuz4n73wHSEthRqBVQ9X3QLCZCUAV1FX8/hByVO0nbINkt6XonIOo//c6I3nvhtO9fB0OyuB/t7VrPFzp4tt1CQi7y3sV48E/U1VG8qX77sWWyM5wP/Z2h2yNdXGi7n4KCFnSF50Rr9OAQryeVStBzem6J/reofqoBkPfNp+Uljh5+adzHzHVxkN/Getlwn0OAxtbrVgmh3GlT3uMqEYn1iokVUUQSJtuFggxdp49G2yx1BmsqB0Kv8Qp8OxmJQINQSfNKa1Ez8/hN3qwojXdGeEflR2Vvoyp39dqY0O/ESH84RMNO3PcFtu1XCTZfIvPMJoiiYLnlfUc5MCcLxYzi+Tnj/PBpviVjLee9/I49QwDb63BoqHOh2Po69M7hKOu55S2Btxr065QIeCeK7rE/XQc82cbJRkeqjOiXSEmyJAMUizCqOfK+vAYAwOk5I+LjkWHs+4e4jyjJF83H1+OeruxlYQMHsCZGdcTLIgrx6dxV+x4L7Gpwd0dLrlp6KuRowmQIMEy1M7pzqQMecZNU7DnW0wRIyXSZdCJ2vaSZ3M9JPqMQwLBgkAqQO6e3M561LIMsbnr99j80w+VUt+xlJ+KFdfxiFrfIz+CVbUWVWTCPmgb9hE=
+    skip_upload_docs: true
     on:
         repo: ga4gh/ga4gh-common
+        tags: true
