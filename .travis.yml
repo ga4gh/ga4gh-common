@@ -27,3 +27,11 @@ script:
         --with-coverage --cover-package ga4gh.common
         --cover-inclusive --cover-min-percentage=70
         --cover-branches --cover-erase
+
+deploy:
+    provider: pypi
+    user: "dannycolligan"
+    password:
+        secure: "n48xeWNni+CsW+SOfBK6eX24QylEl169E63mSHRcn6sayHB1fu8m5UdeUcFLjx0pIRnRWibsww3/STdK5fpzWCIwNk1iHVnquprS5bdODQCNMdYs14DfztohJ6oQ54IBcYHD/ji/Kkd6UYD4w6Pp0v0Xi4AW/g+S21T09Cmzeed9chuuFHGdydznzYEjp0gEDqzh0peSgYaBJjexIkWLFxRpyV9aH4mWG+QW7K+DURp5j2HumNRnr86Ms8O/gBUEfiX8RYjpRgFJcx+a2OsNcSiobcX036eBP3lrSP88MlGOZDpyErSiVddiCIRaqO+pEJbg6dYJ3GohBe7VBkPPTTXk7cR1t5NA4gbChi5KC+0Kh0B/DdwBTmEd8f/OsUYgvwBRLIKfUlYBa4MuyS/f6Svc9v1jsA9q73CKnqAZHuxJVGkXEfX6r2vj9cJxE7LMv/2gmB9pQUtwFyRf4NDwp6Gqe1MwwRIksW+geclv9/AjH93ugvPCVsTXVua/nsKDk1siDYr+BobVn7CFDprGMEZVB2UX0L+YmoPjHVYFWu+BUPf1jss41Sccggq7glJHhJJoac7Ir2idkwvITSOQ3MXWt8Svu0n3Wyj68n3e8bp9g3iZMR8JQH3PiKaGZL9nFtQOZ5y/s/5V+/0rWmaIuI3zMyANxy4ktiZOyzHmQrc="
+    on:
+        tags: true
