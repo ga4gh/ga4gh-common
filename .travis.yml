@@ -28,6 +28,8 @@ script:
         --cover-inclusive --cover-min-percentage=70
         --cover-branches --cover-erase
 
+
+# deploy to pypi when there is a new tag in master after a successful build
 deploy:
     provider: pypi
     user: dannycolligan
